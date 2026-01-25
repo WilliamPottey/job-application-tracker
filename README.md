@@ -55,7 +55,6 @@ This project is intentionally designed using production-style backend patterns, 
 - DELETE /applications/:id
 - POST /applications/:id/notes
 
-- 
 ## Architecture
 The application follows a modular, feature-based structure to separate concerns and improve maintainability. Business logic, data access, and routing are kept distinct to support future scalability and testing.
 
