@@ -4,7 +4,7 @@ An API-first backend service for tracking job applications throughout the hiring
 
 This project is intentionally designed using production-style backend patterns, with an emphasis on clean architecture, relational data modeling, and extensibility. A minimal frontend dashboard is planned for a later phase.
 
-## Features (MVP)
+## Features 
 - User authentication with JWT
 - Create, update, and delete job applications
 - Track application status (Applied, Interview, Offer, etc.)
