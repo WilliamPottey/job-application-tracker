@@ -1,66 +1,181 @@
 # Job Application Tracker API
 
-An API-first backend service for tracking job applications throughout the hiring process. The system allows users to securely manage applications, track status changes, and attach notes, with support for filtering and pagination.
+A backend API for tracking job applications throughout the hiring process.  
+The system supports user authentication, secure ownership-based access, and full CRUD operations for job applications.
 
-This project is intentionally designed using production-style backend patterns, with an emphasis on clean architecture, relational data modeling, and extensibility. A minimal frontend dashboard is planned for a later phase.
+This project was built to practice real-world backend patterns such as JWT authentication, middleware-based authorization, and relational data modeling.
 
-## Features 
-- User authentication with JWT
-- Create, update, and delete job applications
-- Track application status (Applied, Interview, Offer, etc.)
-- Attach notes to applications
-- Filter and paginate application lists
-- Proper error handling and validation
+---
 
-## Tech Stack
-- **Language:** TypeScript
-- **Runtime:** Node.js
-- **Framework:** Express
-- **Database:** PostgreSQL
-- **ORM:** Prisma
-- **Authentication:** JWT
-- **Testing:** Jest (planned)
-- **Infrastructure:** Docker (planned)
+## 🚀 Features
 
-## Data Model (Initial)
-- **User**
-  - id
-  - email
-  - passwordHash
-  - createdAt
+### Authentication
+- User registration with hashed passwords
+- User login with JSON Web Tokens (JWT)
+- Stateless authentication using Bearer tokens
 
-- **JobApplication**
-  - id
-  - userId
-  - companyName
-  - roleTitle
-  - status
-  - appliedDate
-  - createdAt
-  - updatedAt
+### Job Applications
+- Create a job application
+- List all applications for the logged-in user
+- Fetch a single application (ownership enforced)
+- Update application details (PATCH)
+- Delete an application
 
-- **ApplicationNote**
-  - id
-  - applicationId
-  - content
-  - createdAt
+### Security & Design
+- JWT-based route protection via custom middleware
+- Ownership enforced at the database query level
+- No data leakage between users
+- RESTful API design with proper HTTP status codes
 
-## API Endpoints (Planned)
-- POST /auth/register
-- POST /auth/login
-- POST /applications
-- GET /applications
-- GET /applications/:id
-- PATCH /applications/:id
-- DELETE /applications/:id
-- POST /applications/:id/notes
+---
 
-## Architecture
-The application follows a modular, feature-based structure to separate concerns and improve maintainability. Business logic, data access, and routing are kept distinct to support future scalability and testing.
+## 🛠 Tech Stack
 
-## Future Improvements
-- Follow-up reminders with background jobs
-- Status history and analytics
-- Redis caching and rate limiting
-- Minimal frontend dashboard
-- Cloud deployment
+- **Node.js**
+- **TypeScript**
+- **Express**
+- **Prisma ORM**
+- **SQLite** (local development)
+- **JWT (jsonwebtoken)**
+- **bcrypt**
+
+---
+
+## 📁 Project Structure
+
+```
+job-application-tracker/
+├── src/
+│ └── server.ts # Express app, routes, and middleware
+├── prisma/
+│ ├── schema.prisma # Database schema
+│ ├── migrations/ # Prisma migrations
+│ └── migration_lock.toml
+├── .env # Environment variables (not committed)
+├── .gitignore
+├── LICENSE
+├── package.json
+├── package-lock.json
+├── prisma.config.ts
+└── tsconfig.json
+```
+
+---
+
+## ⚙️ Getting Started
+
+### Prerequisites
+- Node.js (v18 or higher recommended)
+- npm
+
+### Installation
+
+```bash
+git clone https://github.com/your-username/job-application-tracker.git
+cd job-application-tracker
+npm install
+```
+
+---
+
+## 🔐 Environment Configuration
+
+Create a `.env` file in the project root:
+
+```env
+DATABASE_URL="file:./dev.db"
+JWT_SECRET="your-secure-secret"
+```
+
+---
+
+## 🗄 Database Setup
+
+This project uses Prisma ORM with SQLite for local development.
+
+Run the following command to create the database and apply migrations:
+```bash
+npx prisma migrate dev
+```
+This will:
+- Create the local SQLite database
+- Apply all existing migrations
+- Generate the Prisma client
+
+---
+
+## ▶️ Running the Server
+
+Start the development server:
+```bash
+npm run dev
+```
+The API will be available at:
+```arduino
+http://localhost:3000
+```
+
+---
+
+## 🔑 Authentication
+
+Authentication is handled using JSON Web Tokens (JWT).
+
+### Authentication Flow
+
+1. Register a user using /auth/register
+2. Log in using /auth/login to receive a JWT
+3. Include the token in the Authorization header for protected routes
+
+Example header:
+```makefile
+Authorization: Bearer <your-jwt-token>
+```
+
+---
+
+## 📌 API Endpoints
+
+### Authentication
+
+| Method | Endpoint | Description |
+|-------|----------|-------------|
+| POST  | `/auth/register` | Register a new user |
+| POST  | `/auth/login`    | Log in and receive a JWT |
+
+### Job Applications (Protected)
+
+| Method | Endpoint | Description |
+|-------|----------|-------------|
+| POST  | `/applications` | Create a job application |
+| GET   | `/applications` | List all applications |
+| GET   | `/applications/:id` | Get a single application |
+| PATCH | `/applications/:id` | Update an application |
+| DELETE | `/applications/:id` | Delete an application |
+
+---
+
+## 🧠 Key Implementation Details
+
+- Passwords are securely hashed using bcrypt
+- Stateless authentication via JWT
+- Custom Express middleware for route protection
+- Authorization enforced at the database query layer
+- Partial updates supported using HTTP PATCH
+- Secure CRUD operations scoped to the authenticated user
+
+---
+
+## 📈 Future Improvements
+
+- Pagination and filtering for applications
+- Input validation with Zod
+- PostgreSQL support
+- Frontend UI
+- Automated tests
+
+---
+
+## 📄 License
+
+MIT
