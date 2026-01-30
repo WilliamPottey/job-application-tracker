@@ -1,0 +1,14 @@
+# dependencies
+node_modules/
+
+# environment variables
+.env
+
+# Prisma / SQLite
+dev.db
+
+# build output
+dist/
+
+# logs
+npm-debug.log*
