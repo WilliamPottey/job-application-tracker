@@ -4,7 +4,9 @@ import type { User } from "./AuthContext"
 
 export function AuthProvider({ children }: {children: React.ReactNode}) {
     const [user, setUser] = useState<User | null>(null);
-    const [token, setToken] = useState<string | null>(null);
+    const [token, setToken] = useState<string | null>(() => {
+        return localStorage.getItem("token");
+    });
 
     function login(token: string, user: User) {
         setToken(token);
