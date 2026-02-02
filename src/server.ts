@@ -4,12 +4,18 @@ import bcrypt from 'bcrypt';
 import { PrismaClient } from '@prisma/client';
 import 'dotenv/config'
 import jwt from 'jsonwebtoken';
+import cors from 'cors';
 
 const app = express();
 const PORT = 3000;
 const prisma = new PrismaClient();
 
 app.use(express.json());
+
+app.use(cors({
+    origin: "http://localhost:5173",
+    credentials: true
+}))
 
 const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
     const authHeader = req.headers.authorization;

@@ -1,8 +1,12 @@
 import { login } from "./api/auth";
+import { useAuth } from "./context/useAuth";
 
 
 
 function App() {
+
+  const { user } = useAuth();
+  console.log("Auth user:", user)
 
   async function testLogin() {
     try {
