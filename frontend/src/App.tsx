@@ -5,12 +5,13 @@ import { useAuth } from "./context/useAuth";
 
 function App() {
 
-  const { user } = useAuth();
-  console.log("Auth user:", user)
+  const auth = useAuth();
+  console.log("Auth user:", auth.user)
 
-  async function testLogin() {
+  async function onClickLogin() {
     try {
       const res = await login("williampottey@gmail.com", "Wpottey31581066!");
+      auth.login(res.token, res.user);
       console.log("Login successful:", res);
     } catch (err) {
       console.error(err)
@@ -21,7 +22,7 @@ function App() {
     <>
       <div style={{ padding: "2rem" }}>
         <h1>Job Application Tracker</h1>
-        <button onClick={testLogin}>Test Login</button>
+        <button onClick={onClickLogin}>Test Login</button>
       </div>
     </>
   )

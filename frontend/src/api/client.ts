@@ -4,9 +4,14 @@ export async function apiFetch(
     endpoint: string,
     options: RequestInit = {}
 ) {
+    const token = localStorage.getItem("token");
+    const isAuthEndpoint = endpoint.startsWith("/auth");
+    console.log(isAuthEndpoint, endpoint)
+
     const response = await fetch(`${API_BASE_URL}${endpoint}`, {
         headers: {
             "Content-Type": "application/json",
+            ...(!isAuthEndpoint && token ? {Authorization: `Bearer ${token}`} : {}),
             ...(options.headers || {})
         },
         ...options,
