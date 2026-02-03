@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getApplications, type Application } from "../api/applications";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../context/useAuth";
 
 export default function Applications() {
@@ -9,6 +9,7 @@ export default function Applications() {
     const [error, setError] = useState<string | null>(null);
 
     const navigate = useNavigate();
+    const location = useLocation();
 
     const { logout } = useAuth();
 
@@ -25,7 +26,8 @@ export default function Applications() {
         }
 
         loadApplications();
-    }, []);
+ 
+    }, [location.state]);
 
     if(loading) {
         return <p>Loading applications...</p>;

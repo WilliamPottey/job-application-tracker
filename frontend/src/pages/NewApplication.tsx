@@ -18,7 +18,9 @@ export default function NewApplication() {
 
         try {
             await createApplication({ companyName, roleTitle, status });
-            navigate("/applications");
+            navigate("/applications", {
+                state: { refresh: true },
+            });
         } catch {
             setError("Failed to create new Application");
         } finally {
@@ -64,9 +66,9 @@ export default function NewApplication() {
                             onChange={(e) => setStatus(e.target.value)}
                         >
                             <option value="APPLIED">Applied</option>
-                            <option value="INTERVIEW">INTERVIEW</option>
-                            <option value="OFFER">OFFER</option>
-                            <option value="REJECTED">REJECTED</option>
+                            <option value="INTERVIEW">Interview</option>
+                            <option value="OFFER">Offer</option>
+                            <option value="REJECTED">Rejected</option>
                         </select>
                     </div>
 
