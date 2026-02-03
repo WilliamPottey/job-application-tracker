@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Login from "./pages/Login";
 import Applications from "./pages/Applications";
 import { ProtectedRoute } from "./routes/ProtectedRoute";
+import NewApplication from "./pages/NewApplication";
 
 
 
@@ -33,7 +34,17 @@ function App() {
                 <Applications/>
               </ProtectedRoute>
             }
-          />     
+          />   
+
+          <Route
+            path="/applications/new"
+            element={
+              <ProtectedRoute>
+                <NewApplication/>
+              </ProtectedRoute>
+            }
+          />
+
         </Routes>
       </BrowserRouter>
     </>
