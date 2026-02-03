@@ -22,5 +22,9 @@ export async function apiFetch(
         throw new Error(error.message || "API request failed")
     }
 
+    if (response.status === 204) {
+        return null;
+    }
+
     return response.json()
 }

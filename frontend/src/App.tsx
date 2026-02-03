@@ -3,7 +3,7 @@ import Login from "./pages/Login";
 import Applications from "./pages/Applications";
 import { ProtectedRoute } from "./routes/ProtectedRoute";
 import NewApplication from "./pages/NewApplication";
-
+import EditApplication from "./pages/EditApplication";
 
 
 function App() {
@@ -41,6 +41,15 @@ function App() {
             element={
               <ProtectedRoute>
                 <NewApplication/>
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/applications/:id/edit"
+            element={
+              <ProtectedRoute>
+                <EditApplication/>
               </ProtectedRoute>
             }
           />

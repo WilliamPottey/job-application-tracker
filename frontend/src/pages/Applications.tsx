@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getApplications, type Application } from "../api/applications";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../context/useAuth";
+import { deleteApplication } from "../api/applications";
 
 export default function Applications() {
     const [applications, setApplications] = useState<Application[]>([]);
@@ -28,6 +29,19 @@ export default function Applications() {
         loadApplications();
  
     }, [location.state]);
+
+    async function handleDelete(id: number): Promise<void> {
+        setError(null);
+        if (!window.confirm("Are you sure?")) return;
+        try {
+            await deleteApplication(id);
+            navigate('/applications', {
+                state: { refresh: true },
+            });
+        } catch {
+            setError("Failed to delete application")
+        }
+    }
 
     if(loading) {
         return <p>Loading applications...</p>;
@@ -70,10 +84,24 @@ export default function Applications() {
                 <tbody>
                 {applications.map((app) => (
                     <tr key={app.id}>
-                    <td>{app.companyName}</td>
-                    <td>{app.roleTitle}</td>
-                    <td>{app.status}</td>
-                    <td>{new Date(app.createdAt).toLocaleDateString()}</td>
+                        <td>{app.companyName}</td>
+                        <td>{app.roleTitle}</td>
+                        <td>{app.status}</td>
+                        <td>{new Date(app.createdAt).toLocaleDateString()}</td>
+                        <td>
+                            <button 
+                                onClick={() => navigate(`/applications/${app.id}/edit`)}
+                                style={{ marginLeft: "2rem" }}
+                                > 
+                                    Edit 
+                            </button>
+                            <button
+                                onClick={() => handleDelete(app.id)}
+                                style={{marginLeft: "2rem"}}
+                            >
+                                Delete
+                            </button>
+                        </td>
                     </tr>
                 ))}
                 </tbody>
